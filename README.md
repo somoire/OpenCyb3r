@@ -10,7 +10,7 @@ OpenCyb3r is a collaborative platform where contributors of all skill levels can
 ### Key Features
 - **Beginner-Friendly Codebase**: Designed with simplicity and learning in mind.
 - **Modular Design**: Add individual tools without affecting the rest of the project.
-- **Gamified Contributions**: Earn points for your contributions and track your progress on our [Leaderboard](leaderboard.md).
+- **Gamified Contributions**: Earn points for your contributions and track your progress on our [Leaderboard](https://akmalel.github.io/OpenCyb3r/leaderboard.html) .
 
 ---
 
