@@ -10,7 +10,17 @@ OpenCyb3r is a collaborative platform where contributors of all skill levels can
 ### Key Features
 - **Beginner-Friendly Codebase**: Designed with simplicity and learning in mind.
 - **Modular Design**: Add individual tools without affecting the rest of the project.
-- **Gamified Contributions**: Earn points for your contributions and track your progress on our [Leaderboard](leaderboard.md).
+- **Gamified Contributions**: Earn points for your contributions and track your progress on our [Leaderboard](https://akmalel.github.io/OpenCyb3r/leaderboard.html) .
+
+<!-- LEADERBOARD START -->
+# OpenCyb3r Top 5 Contributors
+
+| Rank | Contributor | Contributions |
+|------|-------------|----------------|
+| 1 | <img src='https://avatars.githubusercontent.com/u/31905836?v=4' alt='akmalel' width='20' height='20'> akmalel | 19 |
+| 2 | <img src='https://avatars.githubusercontent.com/u/36962977?v=4' alt='evanlutz725' width='20' height='20'> evanlutz725 | 2 |
+
+<!-- LEADERBOARD END -->
 
 ---
 
@@ -47,7 +57,7 @@ Each contribution is awarded points based on its complexity and impact on the pr
 ---
 
 ## Leaderboard
-We celebrate our contributors! Earn points for your work and track your progress on the [Leaderboard](leaderboard.md).
+We celebrate our contributors! Earn points for your work and track your progress on the [Leaderboard](https://akmalel.github.io/OpenCyb3r/leaderboard.html).
 
 ### How Points Are Calculated
 | Contribution Type          | Example                            | Points |
