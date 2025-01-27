@@ -135,21 +135,21 @@ def update_readme(leaderboard, repo):
             f"{contributor['username']} | {contributor['contributions']} |\n"
         )
 
+    start_marker = "<!-- LEADERBOARD START -->"
+    end_marker = "<!-- LEADERBOARD END -->"
+
     try:
         with open("README.md", "r") as file:
             content = file.read()
 
-        start_marker = "<!-- LEADERBOARD START -->"
-        end_marker = "<!-- LEADERBOARD END -->"
-
         if start_marker in content and end_marker in content:
-            # Replace existing leaderboard
+            # Replace content between markers
             before = content.split(start_marker)[0]
             after = content.split(end_marker)[1]
             updated_content = f"{before}{start_marker}\n{markdown}\n{end_marker}{after}"
         else:
-            # Add leaderboard if markers are missing
-            updated_content = f"{content}\n{start_marker}\n{markdown}\n{end_marker}"
+            # Add new markers if missing
+            updated_content = f"{content.strip()}\n{start_marker}\n{markdown}\n{end_marker}\n"
 
         with open("README.md", "w") as file:
             file.write(updated_content)
@@ -159,6 +159,7 @@ def update_readme(leaderboard, repo):
         print("README.md not found. Creating a new one.")
         with open("README.md", "w") as file:
             file.write(f"{start_marker}\n{markdown}\n{end_marker}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update leaderboard.')
