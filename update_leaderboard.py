@@ -128,7 +128,11 @@ def update_readme(leaderboard, repo):
     markdown += "| Rank | Contributor | Contributions |\n"
     markdown += "|------|-------------|----------------|\n"
     for rank, contributor in enumerate(top_5, start=1):
-        markdown += f"| {rank} | ![Avatar]({contributor['avatar_url']}) {contributor['username']} | {contributor['contributions']} |\n"
+        markdown += (
+            f"| {rank} | "
+            f"<img src='{contributor['avatar_url']}' alt='{contributor['username']}' width='20' height='20'> "
+            f"{contributor['username']} | {contributor['contributions']} |\n"
+        )
 
     try:
         with open("README.md", "r") as file:

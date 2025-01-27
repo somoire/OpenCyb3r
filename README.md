@@ -17,9 +17,15 @@ OpenCyb3r is a collaborative platform where contributors of all skill levels can
 
 | Rank | Contributor | Contributions |
 |------|-------------|----------------|
-| 1 | ![Avatar](https://avatars.githubusercontent.com/u/36962977?v=4) evanlutz725 | 2 |
+| 1 | <img src='https://avatars.githubusercontent.com/u/36962977?v=4' alt='evanlutz725' width='20' height='20'> evanlutz725 | 2 |
 
 <!-- LEADERBOARD END -->
+# OpenCyb3r Top 5 Contributors
+
+| Rank | Contributor | Contributions |
+|------|-------------|----------------|
+| 1 | ![Avatar](https://avatars.githubusercontent.com/u/36962977?v=4) evanlutz725 | 2 |
+
 
 ---
 
