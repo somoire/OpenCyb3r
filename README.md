@@ -47,7 +47,7 @@ Each contribution is awarded points based on its complexity and impact on the pr
 ---
 
 ## Leaderboard
-We celebrate our contributors! Earn points for your work and track your progress on the [Leaderboard](leaderboard.md).
+We celebrate our contributors! Earn points for your work and track your progress on the [Leaderboard](https://akmalel.github.io/OpenCyb3r/leaderboard.html).
 
 ### How Points Are Calculated
 | Contribution Type          | Example                            | Points |
