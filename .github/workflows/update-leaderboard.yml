@@ -31,10 +31,16 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md leaderboard.html
+          git add README.md
           if ! git diff --cached --quiet; then
-            git commit -m "Update leaderboard"
+            git commit -m "Update README with leaderboard"
             git push
           else
-            echo "No changes to commit"
+            echo "No changes to commit for README"
           fi
+
+      - name: Deploy leaderboard.html to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./leaderboard.html  # Ensure this matches the location of leaderboard.html
