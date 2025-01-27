@@ -1,5 +1,6 @@
 import requests
 import json
+import argparse
 
 def get_contributors(owner, repo):
     url = f"https://api.github.com/repos/{owner}/{repo}/contributors"
@@ -136,33 +137,38 @@ def update_readme(leaderboard, repo):
 
     try:
         with open("README.md", "r") as file:
-            content = file.read()
-
-        start_marker = "<!-- LEADERBOARD START -->"
-        end_marker = "<!-- LEADERBOARD END -->"
-
-        if start_marker in content and end_marker in content:
-            # Replace existing leaderboard
-            before = content.split(start_marker)[0]
-            after = content.split(end_marker)[1]
-            updated_content = f"{before}{start_marker}\n{markdown}\n{end_marker}{after}"
-        else:
-            # Add leaderboard if markers are missing
-            updated_content = f"{content}\n{start_marker}\n{markdown}\n{end_marker}"
+            content = file.readlines()
 
         with open("README.md", "w") as file:
-            file.write(updated_content)
+            updated = False
+            for line in content:
+                if line.strip() == "<!-- LEADERBOARD START -->":
+                    file.write("<!-- LEADERBOARD START -->\n")
+                    file.write(markdown)
+                    file.write("\n<!-- LEADERBOARD END -->\n")
+                    updated = True
+                elif not (line.strip() == "<!-- LEADERBOARD END -->"):
+                    file.write(line)
+
+            if not updated:
+                file.write("\n<!-- LEADERBOARD START -->\n")
+                file.write(markdown)
+                file.write("\n<!-- LEADERBOARD END -->\n")
 
         print("README.md updated successfully with the Top 5 leaderboard.")
     except FileNotFoundError:
         print("README.md not found. Creating a new one.")
         with open("README.md", "w") as file:
-            file.write(f"{start_marker}\n{markdown}\n{end_marker}")
-
+            file.write(markdown)
 
 if __name__ == "__main__":
-    owner = input("Enter the GitHub repository owner: ")
-    repo = input("Enter the GitHub repository name: ")
+    parser = argparse.ArgumentParser(description='Update leaderboard.')
+    parser.add_argument('--owner', required=True, help='The GitHub repository owner')
+    parser.add_argument('--repo', required=True, help='The GitHub repository name')
+    args = parser.parse_args()
+
+    owner = args.owner
+    repo = args.repo
 
     print("Generating GitHub repository leaderboard...")
 
