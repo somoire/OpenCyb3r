@@ -43,4 +43,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./leaderboard.html  # Ensure this matches the location of leaderboard.html
+          publish_dir: ./  # Deploys all files in the root directory, including leaderboard.html
