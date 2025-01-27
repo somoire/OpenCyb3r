@@ -1,6 +1,7 @@
 import requests
 import json
 import argparse
+import re
 
 def get_contributors(owner, repo):
     url = f"https://api.github.com/repos/{owner}/{repo}/contributors"
@@ -123,6 +124,8 @@ def save_html_to_file(html, filename="leaderboard.html"):
     with open(filename, "w") as file:
         file.write(html)
 
+import re
+
 def update_readme(leaderboard, repo):
     top_5 = leaderboard[:5]
     markdown = f"# {repo} Top 5 Contributors\n\n"
@@ -137,19 +140,24 @@ def update_readme(leaderboard, repo):
 
     start_marker = "<!-- LEADERBOARD START -->"
     end_marker = "<!-- LEADERBOARD END -->"
+    leaderboard_section = f"{start_marker}\n{markdown}\n{end_marker}"
 
     try:
         with open("README.md", "r") as file:
             content = file.read()
 
+        # Replace or append the leaderboard section
         if start_marker in content and end_marker in content:
-            # Replace content between markers
-            before = content.split(start_marker)[0]
-            after = content.split(end_marker)[1]
-            updated_content = f"{before}{start_marker}\n{markdown}\n{end_marker}{after}"
+            # Replace the content between the markers
+            updated_content = re.sub(
+                f"{start_marker}.*?{end_marker}",
+                leaderboard_section,
+                content,
+                flags=re.DOTALL,
+            )
         else:
-            # Add new markers if missing
-            updated_content = f"{content.strip()}\n{start_marker}\n{markdown}\n{end_marker}\n"
+            # Add markers and leaderboard if missing
+            updated_content = f"{content.strip()}\n\n{leaderboard_section}\n"
 
         with open("README.md", "w") as file:
             file.write(updated_content)
@@ -158,7 +166,8 @@ def update_readme(leaderboard, repo):
     except FileNotFoundError:
         print("README.md not found. Creating a new one.")
         with open("README.md", "w") as file:
-            file.write(f"{start_marker}\n{markdown}\n{end_marker}")
+            file.write(leaderboard_section)
+
 
 
 if __name__ == "__main__":
