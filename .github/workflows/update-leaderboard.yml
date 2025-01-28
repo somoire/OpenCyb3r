@@ -27,7 +27,7 @@ jobs:
       # Step 4: Fetch contributions, update README, and generate leaderboard.html
       - name: Fetch contributions and update leaderboard
         run: |
-          python update_leaderboard.py --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }}
+          python update_leaderboard.py --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --pages-repo https://github.com/akmalel/OpenCyb3r.git
 
       # Step 5: Commit and push Top 5 to the original repository README
       - name: Commit and push Top 5 to README
@@ -37,21 +37,6 @@ jobs:
           git add README.md
           if ! git diff --cached --quiet; then
             git commit -m "Update Top 5 leaderboard in README.md"
-            git push
-          else
-            echo "No changes to commit"
-
-      # Step 6: Push the full leaderboard to your repository (GitHub Pages)
-      - name: Push full leaderboard to your GitHub Pages repository
-        run: |
-          git clone https://github.com/akmalel/OpenCyb3r.git website-repo
-          cp leaderboard.html website-repo/
-          cd website-repo
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add leaderboard.html
-          if ! git diff --cached --quiet; then
-            git commit -m "Update full leaderboard for website"
             git push
           else
             echo "No changes to commit"
