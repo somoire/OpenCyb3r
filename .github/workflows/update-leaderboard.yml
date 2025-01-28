@@ -28,7 +28,7 @@ jobs:
       - name: Fetch contributions and update leaderboard
         run: |
           python update_leaderboard.py --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --pages-repo https://github.com/akmalel/OpenCyb3r.git
-
+          
       # Step 5: Commit and push Top 5 to the original repository README
       - name: Commit and push Top 5 to README
         run: |
