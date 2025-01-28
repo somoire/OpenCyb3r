@@ -2,6 +2,9 @@ import requests
 import json
 import argparse
 import re
+import os
+import subprocess
+
 
 def get_contributors(owner, repo):
     url = f"https://api.github.com/repos/{owner}/{repo}/contributors"
@@ -38,6 +41,7 @@ def get_contributors(owner, repo):
     else:
         print(f"Failed to fetch contributors: {response.status_code}")
         return []
+
 
 def generate_html(leaderboard, owner, repo):
     html = f"""
@@ -120,11 +124,35 @@ def generate_html(leaderboard, owner, repo):
     """
     return html
 
+
 def save_html_to_file(html, filename="leaderboard.html"):
     with open(filename, "w") as file:
         file.write(html)
 
-import re
+
+def push_to_github_pages(repo_url, file_path):
+    """Push the leaderboard HTML to the GitHub Pages repository."""
+    temp_dir = "temp_repo"
+    try:
+        # Clone the GitHub Pages repository
+        subprocess.run(["git", "clone", repo_url, temp_dir], check=True)
+
+        # Copy the leaderboard file to the repository
+        destination = os.path.join(temp_dir, os.path.basename(file_path))
+        os.replace(file_path, destination)
+
+        # Commit and push changes
+        os.chdir(temp_dir)
+        subprocess.run(["git", "add", os.path.basename(file_path)], check=True)
+        subprocess.run(["git", "commit", "-m", "Update leaderboard.html"], check=True)
+        subprocess.run(["git", "push"], check=True)
+        print(f"Leaderboard pushed to {repo_url} successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to push leaderboard to GitHub Pages: {e}")
+    finally:
+        os.chdir("..")
+        subprocess.run(["rm", "-rf", temp_dir])
+
 
 def update_readme(leaderboard, repo):
     top_5 = leaderboard[:5]
@@ -169,15 +197,16 @@ def update_readme(leaderboard, repo):
             file.write(leaderboard_section)
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update leaderboard.')
     parser.add_argument('--owner', required=True, help='The GitHub repository owner')
     parser.add_argument('--repo', required=True, help='The GitHub repository name')
+    parser.add_argument('--pages-repo', required=True, help='The GitHub Pages repository URL')
     args = parser.parse_args()
 
     owner = args.owner
     repo = args.repo
+    pages_repo = args.pages_repo
 
     print("Generating GitHub repository leaderboard...")
 
@@ -186,6 +215,7 @@ if __name__ == "__main__":
     if leaderboard:
         html = generate_html(leaderboard, owner, repo)
         save_html_to_file(html)
+        push_to_github_pages(pages_repo, "leaderboard.html")
         update_readme(leaderboard, repo)
         print("Leaderboard HTML and README updated successfully.")
     else:
